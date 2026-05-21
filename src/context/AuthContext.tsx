@@ -156,17 +156,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
+    // Timeout de seguridad: si en 8 segundos no resuelve, forzar cargando=false
+    const timeout = setTimeout(() => setCargando(false), 8000);
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       if (session?.user?.id) {
-        cargarUsuario(session.user.id).finally(() => setCargando(false));
+        cargarUsuario(session.user.id).finally(() => {
+          clearTimeout(timeout);
+          setCargando(false);
+        });
         suscribirRealtime(session.user.id);
       } else {
         leerCache().then(cached => {
           if (cached) setUsuario(cached);
+          clearTimeout(timeout);
           setCargando(false);
         });
       }
+    }).catch(() => {
+      // Si getSession falla completamente, mostrar login
+      clearTimeout(timeout);
+      setCargando(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, sess) => {

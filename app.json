@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "CeniCard",
+    "slug": "cenicard",
+    "version": "1.0.12",
+    "scheme": "cenicard",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./src/Img/Logo.png",
+      "backgroundColor": "#007832",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sena.cenicard"
+    },
+    "android": {
+      "edgeToEdgeEnabled": true,
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.sena.cenicard",
+      "icon": "./src/Img/Logo.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./src/Img/Logo.png",
+        "backgroundColor": "#007832"
+      }
+    },
+    "web": {
+      "output": "single"
+    },
+    "plugins": [
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "CeniCard necesita acceso a tu galería para la foto de perfil."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6e02aae5-d89f-40c4-97d9-fb5aeb53cca0"
+      }
+    }
+  }
+}

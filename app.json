@@ -2,7 +2,7 @@
   "expo": {
     "name": "CeniCard",
     "slug": "cenicard",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "scheme": "cenicard",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",

@@ -1,7 +1,6 @@
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import React, { useCallback } from "react";
-import { View } from "react-native";
+import React, { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AuthProvider } from "./src/context/AuthContext";
 import { FONTS } from "./src/lib/fonts";
@@ -11,20 +10,22 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts(FONTS);
+  const [splashHidden, setSplashHidden] = useState(false);
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded || fontError) await SplashScreen.hideAsync();
+  useEffect(() => {
+    if ((fontsLoaded || fontError) && !splashHidden) {
+      SplashScreen.hideAsync()
+        .then(() => setSplashHidden(true))
+        .catch(() => setSplashHidden(true));
+    }
   }, [fontsLoaded, fontError]);
 
-  // Si las fuentes fallan o cargan, continuar igual
   if (!fontsLoaded && !fontError) return null;
 
   return (
     <SafeAreaProvider>
       <AuthProvider>
-        <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-          <Navegacion />
-        </View>
+        <Navegacion />
       </AuthProvider>
     </SafeAreaProvider>
   );
